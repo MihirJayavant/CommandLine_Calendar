@@ -11,26 +11,16 @@ public class ChangeYearFeature : IFeature
         Console.WriteLine("Enter year (0000-9999):");
         var s = Console.ReadLine() ?? "";
         var valid = int.TryParse(s, out var year);
-        if (valid)
+        if (valid && s.Length == 4 && year >= 0 && year <= 9999)
         {
-            if (s.Length == 4)
-            {
-                if (year >= 0 && year <= 9999)
-                {
-                    var c = new CalenderInteraction(year, calenderInteraction.month, calenderInteraction.day);
-                    Console.WriteLine("Successfully changed to year:" + year);
-                    return c;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid year");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid year\tyear format should be YYYY");
-            }
+            Console.WriteLine("Successfully changed to year:" + year);
+            return new CalenderInteraction(year, calenderInteraction.month, calenderInteraction.day);
         }
+        else
+        {
+            Console.WriteLine("Invalid year, it should be YYYY.\neg. 2021");
+        }
+
         return calenderInteraction;
     }
 }

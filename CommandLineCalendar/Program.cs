@@ -15,7 +15,7 @@ do
     entered = entered.Trim();
     switch (entered)
     {
-        case "exit cal":
+        case "exit":
             option = 1;
             break;
 
@@ -54,7 +54,7 @@ do
             break;
 
         case "help":
-            displayHelp();
+            new HelpDisplayFeature().Run(c);
             break;
 
         case "":
@@ -74,15 +74,6 @@ DateTime startingMessage()
     return d;
 }
 
-void displayHelp()
-{
-    Console.WriteLine("1.To change year enter:\t\t\t\tcg -yr\n" +
-                      "2.To change month enter:\t\t\tcg -month\n" +
-                      "3.To Show calendar of saved year enter:\t\tshow\n" +
-                      "4.To Show calendar of saved year,month enter:\tshow -s\n" +
-                      "5.To exit enter:\t\t\t\texit cal");
-}
-
 CalenderInteraction Change(CalenderInteraction c, int option)
 {
     string s;
@@ -95,27 +86,7 @@ CalenderInteraction Change(CalenderInteraction c, int option)
             break;
 
         case 2:
-
-            Console.WriteLine("Enter month (1-12):");
-            s = Console.ReadLine() ?? "";
-            if (CheckIfNum(s))
-            {
-
-                int temp = int.Parse(Console.ReadLine() ?? "");
-                if (temp > 0 && temp <= 12)
-                {
-                    c.month = temp;
-                    Console.WriteLine("Successfully changed month to:" + c.month);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid month");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Enter only digits");
-            }
+            c = new ChangeMonthFeature().Run(c);
             break;
     }
 

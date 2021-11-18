@@ -2,17 +2,17 @@
 
 public class CalenderInteraction
 {
-    private System.DateTime date;
+    private DateTime date;
     private int startingDayOfYear;
     public int month { set; get; }
     public int day { get; }
 
-    private static string[] months = { "january", "february", "march", "april", "may", "june", "july", "august",
+    private static readonly string[] MonthNames = { "january", "february", "march", "april", "may", "june", "july", "august",
             "september", "october", "november", "december" };
 
-    private int[] daysInMonths = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    private readonly int[] daysInMonths = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-    private static string[] dayNames = { "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat" };
+    private static readonly string[] DayNames = { "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat" };
 
     public CalenderInteraction(int year, int month, int day)
     {
@@ -54,7 +54,7 @@ public class CalenderInteraction
         string s = "";
         for (int i = 0; i < 7; i++)
         {
-            s = s + dayNames[i] + "\t";
+            s = s + DayNames[i] + "\t";
         }
         return s;
     }
@@ -100,6 +100,6 @@ public class CalenderInteraction
 
     static public string getSpecificMonth(int month)
     {
-        return months[month - 1];
+        return MonthNames[month - 1];
     }
 }
