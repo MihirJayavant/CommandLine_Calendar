@@ -1,4 +1,5 @@
 ﻿using CommandLineCalender;
+using CommandLineCalender.Commands;
 
 DateTime d = startingMessage();
 string s;
@@ -69,7 +70,7 @@ do
 DateTime startingMessage()
 {
     DateTime d = DateTime.Now;
-    Console.WriteLine("Welcome to Command Line Calender\nToday's date:" + d + "\nFor help enter:help");
+    Console.WriteLine("Welcome to Command Line Calender\nToday's date:" + d + "\nFor help enter: help");
     return d;
 }
 
@@ -90,35 +91,7 @@ CalenderInteraction Change(CalenderInteraction c, int option)
     switch (option)
     {
         case 1:
-
-            Console.WriteLine("Enter year (0000-9999):");
-            s = Console.ReadLine() ?? "";
-            if (CheckIfNum(s))
-            {
-                if (s.Length == 4)
-                {
-
-                    year = int.Parse(s);
-
-                    if (year >= 0 && year <= 9999)
-                    {
-                        c = new CalenderInteraction(year, c.month, c.day);
-                        Console.WriteLine("Successfully changed to year:" + year);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid year");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid year\tyear format should be YYYY");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Enter only digits");
-            }
+            c = new ChangeYearFeature().Run(c);
             break;
 
         case 2:
