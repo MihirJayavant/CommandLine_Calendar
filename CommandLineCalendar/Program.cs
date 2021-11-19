@@ -1,17 +1,15 @@
 ﻿using CommandLineCalender;
 using CommandLineCalender.Commands;
 
-DateTime d = startingMessage();
-string s;
-int temp;
+var d = startingMessage();
 
-CalenderInteraction c = new CalenderInteraction(d.Year, d.Month, d.Day);
+var c = new CalenderInteraction(d.Year, d.Month, d.Day);
 
-int option = 0;
-string entered = "";
+var option = 0;
+
 do
 {
-    entered = Console.ReadLine() ?? "";
+    var entered = Console.ReadLine() ?? "";
     entered = entered.Trim();
     switch (entered)
     {
@@ -20,41 +18,23 @@ do
             break;
 
         case "cg -yr":
-            c = Change(c, 1);
+            c = new ChangeYearFeature().Run(c);
             break;
 
         case "cg -month":
-            c = Change(c, 2);
+            c = new ChangeMonthFeature().Run(c);
             break;
 
         case "show":
-            Console.WriteLine("Enter Month (1-12):");
-            s = Console.ReadLine() ?? "";
-
-            if (!CheckIfNum(s))
-            {
-                Console.WriteLine("Enter only digits");
-                break;
-            }
-
-            temp = int.Parse(s);
-
-            if (temp > 0 && temp <= 12)
-            {
-                Show(c, temp);
-            }
-            else
-            {
-                Console.WriteLine("Invalid Month");
-            }
+            c = new ShowCalendarFeature().Run(c);
             break;
 
         case "show -s":
-            Show(c, c.month);
+            c = new ShowCurrentFeature().Run(c);
             break;
 
         case "help":
-            new HelpDisplayFeature().Run(c);
+            c = new HelpDisplayFeature().Run(c);
             break;
 
         case "":
@@ -69,28 +49,9 @@ do
 
 DateTime startingMessage()
 {
-    DateTime d = DateTime.Now;
+    var d = DateTime.Now;
     Console.WriteLine("Welcome to Command Line Calender\nToday's date:" + d + "\nFor help enter: help");
     return d;
-}
-
-CalenderInteraction Change(CalenderInteraction c, int option)
-{
-    string s;
-    int year;
-
-    switch (option)
-    {
-        case 1:
-            c = new ChangeYearFeature().Run(c);
-            break;
-
-        case 2:
-            c = new ChangeMonthFeature().Run(c);
-            break;
-    }
-
-    return c;
 }
 
 void Show(CalenderInteraction c, int month)

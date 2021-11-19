@@ -2,9 +2,9 @@ namespace CommandLineCalender.Commands;
 
 public class ChangeYearFeature : IFeature
 {
-    public string CommandName => "cg year";
+    public string CommandName => "cd -y";
 
-    public string Info => "To change year enter:\t\t\t\tcg year";
+    public string Info => "To change year enter                         :  cd -y";
 
     public CalenderInteraction Run(CalenderInteraction calenderInteraction)
     {
