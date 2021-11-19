@@ -2,47 +2,43 @@
 using CommandLineCalender.Commands;
 
 var d = startingMessage();
-
 var c = new CalenderInteraction(d.Year, d.Month, d.Day);
-
 var option = 0;
+
+IFeature[] features = {
+    new ChangeYearFeature(),
+    new ChangeMonthFeature(),
+    new HelpDisplayFeature(),
+    new ShowCalendarFeature(),
+    new ShowCurrentFeature()
+};
+
+var hashMap = new Dictionary<string, IFeature>();
+
+foreach (var f in features)
+{
+    hashMap.Add(f.CommandName, f);
+}
 
 do
 {
     var entered = Console.ReadLine() ?? "";
     entered = entered.Trim();
-    switch (entered)
+    var found = hashMap.TryGetValue(entered, out var feature);
+    if (found is false)
     {
-        case "exit":
+        if (entered == "exit")
+        {
             option = 1;
-            break;
-
-        case "cg -yr":
-            c = new ChangeYearFeature().Run(c);
-            break;
-
-        case "cg -month":
-            c = new ChangeMonthFeature().Run(c);
-            break;
-
-        case "show":
-            c = new ShowCalendarFeature().Run(c);
-            break;
-
-        case "show -s":
-            c = new ShowCurrentFeature().Run(c);
-            break;
-
-        case "help":
-            c = new HelpDisplayFeature().Run(c);
-            break;
-
-        case "":
-            break;
-
-        default:
-            Console.WriteLine("Invalid command");
-            break;
+        }
+        if (entered != "")
+        {
+            Console.WriteLine("Invalid Command");
+        }
+    }
+    else
+    {
+        c = feature!.Run(c);
     }
 
 } while (option == 0);

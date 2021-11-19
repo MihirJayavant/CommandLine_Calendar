@@ -11,13 +11,7 @@ public class ShowCalendarFeature : IFeature
         Console.WriteLine("Enter Month (1-12):");
         var s = Console.ReadLine() ?? "";
         var valid = int.TryParse(s, out var month);
-        if (valid)
-        {
-            Console.WriteLine("Enter only digits");
-            return calenderInteraction;
-        }
-
-        if (month > 0 && month <= 12)
+        if (valid && month > 0 && month <= 12)
         {
             Show(calenderInteraction, month);
         }
