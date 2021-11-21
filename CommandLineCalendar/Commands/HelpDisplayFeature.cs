@@ -1,21 +1,24 @@
+using System.Reflection;
+
 namespace CommandLineCalender.Commands;
 
 public class HelpDisplayFeature : IFeature
 {
     public string CommandName => "help";
-
     public string Info => "For help enter: help";
 
     public CalenderInteraction Run(CalenderInteraction calenderInteraction)
     {
-        Console.WriteLine(@"
-1. To change year enter                         :  cg -yr
-2. To change month enter                        :  cg -month
-3. To Show calendar of saved year enter         :  show
-4. To Show calendar of saved year,month enter   :  show -s
-5. To exit enter                                :  exit
-6. For help enter                               :  help
-");
+        var assignableType = typeof(IFeature);
+        var features = Assembly.GetExecutingAssembly()
+                                .GetTypes()
+                                .Where(t => assignableType.IsAssignableFrom(t) && t.IsClass)
+                                .Select(f => (Activator.CreateInstance(f) as IFeature)!)
+                                .ToArray();
+        for (var i = 0; i < features.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}. {features[i]!.Info}");
+        }
 
         return calenderInteraction;
     }
