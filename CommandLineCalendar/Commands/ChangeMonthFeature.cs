@@ -4,7 +4,7 @@ public class ChangeMonthFeature : IFeature
 {
     public string CommandName => "cd -m";
 
-    public string Info => @"To change month enter                        :  cd -m";
+    public string Info => "To change month enter \t\t\t:  cd -m";
 
     public CalenderInteraction Run(CalenderInteraction calenderInteraction)
     {

@@ -4,7 +4,7 @@ public class ShowCurrentFeature : IFeature
 {
     public string CommandName => "ls";
 
-    public string Info => "To Show calendar of saved year,month enter   :  ls";
+    public string Info => "Show Full Month \t: ls";
 
     public CalenderInteraction Run(CalenderInteraction calenderInteraction)
     {
