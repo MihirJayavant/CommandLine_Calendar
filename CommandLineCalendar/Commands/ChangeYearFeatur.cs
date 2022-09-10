@@ -4,7 +4,7 @@ public class ChangeYearFeature : IFeature
 {
     public string CommandName => "cd -y";
 
-    public string Info => "To change year enter                         :  cd -y";
+    public string Info => "Change Year \t\t\t:  cd -y";
 
     public CalenderInteraction Run(CalenderInteraction calenderInteraction)
     {

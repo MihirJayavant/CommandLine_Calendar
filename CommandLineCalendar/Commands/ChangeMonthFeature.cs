@@ -2,9 +2,9 @@ namespace CommandLineCalender.Commands;
 
 public class ChangeMonthFeature : IFeature
 {
-    public string CommandName => "cd -m";
+    public string CommandName => "cd -y";
 
-    public string Info => "To change month enter \t\t\t:  cd -m";
+    public string Info => "Change Month \t\t\t:  cd -m";
 
     public CalenderInteraction Run(CalenderInteraction calenderInteraction)
     {
