@@ -4,7 +4,7 @@ public class ChangeYearFeature : IFeature
 {
     public string CommandName => "cd -y";
 
-    public string Info => "Change Year \t\t\t:  cd -y";
+    public string Info => "Change Year \t\t\t: cd -y";
 
     public Context Run(Context context)
     {
@@ -14,7 +14,7 @@ public class ChangeYearFeature : IFeature
         if (valid && s.Length == 4 && year >= 0 && year <= 9999)
         {
             context.Manager.ChangeYear(year);
-            Console.WriteLine("Successfully changed to year:" + context.Manager.Year);
+            Console.WriteLine("Successfully changed to year: " + context.Manager.Year);
         }
         else
         {

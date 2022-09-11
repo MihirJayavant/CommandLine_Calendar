@@ -4,7 +4,7 @@ public class ChangeMonthFeature : IFeature
 {
     public string CommandName => "cd -m";
 
-    public string Info => "Change Month \t\t:  cd -m";
+    public string Info => "Change Month \t\t: cd -m";
 
     public Context Run(Context context)
     {
@@ -14,7 +14,7 @@ public class ChangeMonthFeature : IFeature
         if (valid && month >= 1 && month <= 12)
         {
             context.Manager.ChangeMonth(month);
-            Console.WriteLine("Successfully changed month to:" + context.Manager.MonthName);
+            Console.WriteLine("Successfully changed month to: " + context.Manager.MonthName);
         }
         else
         {

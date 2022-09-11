@@ -3,7 +3,7 @@ namespace CommandLineCalender.Commands;
 public class HelpDisplayFeature : IFeature
 {
     public string CommandName => "help";
-    public string Info => "For help enter \t\t: help";
+    public string Info => "For Help \t\t\t: help";
 
     public Context Run(Context context)
     {

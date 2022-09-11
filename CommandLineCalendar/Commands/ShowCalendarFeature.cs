@@ -4,7 +4,7 @@ public class ShowCalendarFeature : IFeature
 {
     public string CommandName => "ls -m";
 
-    public string Info => "Show Any Month \t\t:  ls -m";
+    public string Info => "Show Any Month \t\t: ls -m";
 
     public Context Run(Context context)
     {
@@ -28,12 +28,12 @@ public class ShowCalendarFeature : IFeature
         c.Manager.ChangeMonth(month);
         var daysMatrix = c.Manager.CalendarOfTheMonth();
 
-        Console.WriteLine($"\t\t\t{c.Manager.MonthName} {c.Manager.Year}");
+        Console.WriteLine($"\t\t{c.Manager.MonthName} {c.Manager.Year}");
         Console.WriteLine(string.Join('\t', CalendarManager.DayNames));
 
         foreach (var line in daysMatrix)
         {
-            Console.WriteLine(string.Join('\t', line));
+            Console.WriteLine(string.Join('\t', line).Replace("-1", " "));
         }
         c.Manager.ChangeMonth(temp);
     }
