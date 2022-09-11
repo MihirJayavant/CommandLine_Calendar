@@ -4,20 +4,24 @@ public class ShowCurrentFeature : IFeature
 {
     public string CommandName => "ls";
 
-    public string Info => "Show Full Month \t: ls";
+    public string Info => "Show Full Month \t\t: ls";
 
-    public CalenderInteraction Run(CalenderInteraction calenderInteraction)
+    public Context Run(Context context)
     {
-        Show(calenderInteraction, calenderInteraction.month);
-        return calenderInteraction;
+        Show(context);
+        return context;
     }
 
-    private static void Show(CalenderInteraction c, int month)
+    private static void Show(Context c)
     {
-        var temp = c.month;
-        c.month = month;
-        Console.WriteLine($"\t\t\t{CalenderInteraction.getSpecificMonth(month).ToUpper()} {c.getYear()}");
-        Console.WriteLine($"\t{c.getAllDayInName()}\n{CalenderInteraction.formatToCalendar(c.getCalendarOfMonth())}");
-        c.month = temp;
+        var daysMatrix = c.Manager.CalendarOfTheMonth();
+
+        Console.WriteLine($"\t\t\t{c.Manager.MonthName} {c.Manager.Year}");
+        Console.WriteLine(string.Join('\t', CalendarManager.DayNames));
+
+        foreach (var line in daysMatrix)
+        {
+            Console.WriteLine(string.Join('\t', line));
+        }
     }
 }

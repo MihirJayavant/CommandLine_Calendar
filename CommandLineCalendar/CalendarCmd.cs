@@ -1,4 +1,3 @@
-using System.Reflection;
 using CommandLineCalender.Commands;
 
 namespace CommandLineCalender;
@@ -7,53 +6,44 @@ public class CalendarCmd
 {
     public static void Run()
     {
-        var assignableType = typeof(IFeature);
-        var features = Assembly.GetExecutingAssembly()
-                                .GetTypes()
-                                .Where(t => assignableType.IsAssignableFrom(t) && t.IsClass)
-                                .Select(f => Activator.CreateInstance(f) as IFeature)
-                                .ToList();
+        var features = new IFeature[] {
+            new ChangeMonthFeature(),
+            new ChangeYearFeature(),
+            new HelpDisplayFeature(),
+            new ShowCalendarFeature(),
+            new ShowCurrentFeature(),
+            new ExitFeature()
+        };
 
         var hashMap = new Dictionary<string, IFeature>();
 
         foreach (var f in features)
         {
-            if (f is not null)
-            {
-                hashMap.Add(f.CommandName, f);
-            }
+            hashMap.Add(f.CommandName, f);
         }
-        var d = startingMessage();
-        var c = new CalenderInteraction(d.Year, d.Month, d.Day);
-        var option = 0;
+
+        startingMessage();
+        var context = new Context(new CalendarManager(), features.ToArray());
         do
         {
             var entered = Console.ReadLine() ?? "";
             entered = entered.Trim();
-            var found = hashMap.TryGetValue(entered, out var feature);
-            if (found is false)
+            hashMap.TryGetValue(entered, out var feature);
+            if (feature is not null)
             {
-                if (entered == "exit")
-                {
-                    option = 1;
-                }
-                if (entered != "")
-                {
-                    Console.WriteLine("Invalid Command");
-                }
+                context = feature.Run(context);
             }
             else
             {
-                c = feature!.Run(c);
+                Console.WriteLine("Invalid Command");
             }
 
-        } while (option == 0);
+        } while (context.Exit is false);
 
-        static DateTime startingMessage()
+        static void startingMessage()
         {
             var d = DateTime.Now;
-            Console.WriteLine("Welcome to Command Line Calender\nToday's date:" + d + "\nFor help enter: help");
-            return d;
+            Console.WriteLine("Welcome to Command Line Calender\nToday's date: " + d + "\nFor help enter: help");
         }
 
     }

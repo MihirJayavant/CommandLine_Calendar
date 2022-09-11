@@ -12,33 +12,35 @@ public sealed class CalendarManager
         };
     public static readonly string[] DayNames = { "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat" };
 
-    public string Day => DayNames[(int)CurrentCalendar.GetDayOfWeek(Current)];
-    public string Month => MonthNames[CurrentCalendar.GetMonth(Current)];
+    public string DayName => DayNames[(int)CurrentCalendar.GetDayOfWeek(Current)];
+    public string MonthName => MonthNames[CurrentCalendar.GetMonth(Current)];
     public int Year => CurrentCalendar.GetYear(Current);
+    public int Month => CurrentCalendar.GetMonth(Current);
 
-    public int[,] CalendarOfTheMonth()
+    public int[][] CalendarOfTheMonth()
     {
-        var monthMatrix = new int[6, 7];
+        var monthMatrix = new int[6][];
         var start = (int)CurrentCalendar.GetDayOfWeek(Current);
         var daysInMonth = CurrentCalendar.GetDaysInMonth(Current.Year, Current.Month);
         var count = 1;
 
         for (var i = 0; i < 6; i++)
         {
+            monthMatrix[i] = new int[7];
             for (var j = 0; j < 7; j++)
             {
                 if (i == 0 && i < start)
                 {
-                    monthMatrix[i, j] = 0;
+                    monthMatrix[i][j] = 0;
                 }
                 else if (count < daysInMonth)
                 {
-                    monthMatrix[i, j] = count;
+                    monthMatrix[i][j] = count;
                     count++;
                 }
                 else
                 {
-                    monthMatrix[i, j] = 0;
+                    monthMatrix[i][j] = 0;
                 }
             }
         }

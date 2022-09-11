@@ -4,30 +4,37 @@ public class ShowCalendarFeature : IFeature
 {
     public string CommandName => "ls -m";
 
-    public string Info => "To Show calendar of saved year enter         :  ls -m";
+    public string Info => "Show Any Month \t\t:  ls -m";
 
-    public CalenderInteraction Run(CalenderInteraction calenderInteraction)
+    public Context Run(Context context)
     {
         Console.WriteLine("Enter Month (1-12):");
         var s = Console.ReadLine() ?? "";
         var valid = int.TryParse(s, out var month);
         if (valid && month > 0 && month <= 12)
         {
-            Show(calenderInteraction, month);
+            Show(context, month);
         }
         else
         {
             Console.WriteLine("Invalid Month");
         }
-        return calenderInteraction;
+        return context;
     }
 
-    private static void Show(CalenderInteraction c, int month)
+    private static void Show(Context c, int month)
     {
-        var temp = c.month;
-        c.month = month;
-        Console.WriteLine($"\t\t\t{CalenderInteraction.getSpecificMonth(month).ToUpper()} {c.getYear()}");
-        Console.WriteLine($"\t{c.getAllDayInName()}\n{CalenderInteraction.formatToCalendar(c.getCalendarOfMonth())}");
-        c.month = temp;
+        var temp = c.Manager.Month;
+        c.Manager.ChangeMonth(month);
+        var daysMatrix = c.Manager.CalendarOfTheMonth();
+
+        Console.WriteLine($"\t\t\t{c.Manager.MonthName} {c.Manager.Year}");
+        Console.WriteLine(string.Join('\t', CalendarManager.DayNames));
+
+        foreach (var line in daysMatrix)
+        {
+            Console.WriteLine(string.Join('\t', line));
+        }
+        c.Manager.ChangeMonth(temp);
     }
 }
